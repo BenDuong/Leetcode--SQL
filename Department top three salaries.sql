@@ -41,10 +41,11 @@
 
 -- Solution
 
-select a.department, a.employee, a.salary
+select d.Name as Department, a. Name as Employee, a. Salary 
 from (
-select d.name as department, e.name as employee, salary, 
-    dense_rank() over(Partition by d.name order by salary desc) as rk
-from Employee e join Department d
-on e.departmentid = d.id) a
-where a.rk<4
+select e.*, dense_rank() over (partition by DepartmentId order by Salary desc) as DeptPayRank 
+from Employee e 
+) a 
+join Department d
+on a. DepartmentId = d. Id 
+where DeptPayRank <=3;
